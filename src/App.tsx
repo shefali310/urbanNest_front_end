@@ -1,11 +1,35 @@
-import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Layout from "./layouts/Layout";
 
-function App() {
+const App =() => {
   return (
-    <div>
-      <h1 className='text-3xl ml-5'>Hotel Booking</h1>
-    </div>
+   <Router>
+    <Routes>
+
+      <Route path="/" 
+      element={
+      <Layout>
+        <p>Home page</p>
+      </Layout>}/>
+
+      <Route path="/search" 
+      element={
+      <Layout>
+        <p>Search page</p>
+      </Layout>}/>
+
+
+     
+
+     
+    </Routes>
+   </Router>
   )
 }
 
-export default App
+export default App;
