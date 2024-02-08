@@ -12,55 +12,86 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Aboutus from "./pages/Aboutus";
 import Contactus from "./pages/Contactus";
 
-const App =() => {
+const App = () => {
   return (
-   <Router>
-    <Routes>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <p>Home page</p>
+            </Layout>
+          }
+        />
 
-      <Route path="/" 
-      element={
-      <Layout>
-        <p>Home page</p>
-      </Layout>}/>
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <p>Search page</p>
+            </Layout>
+          }
+        />
 
-      <Route path="/search" 
-      element={
-      <Layout>
-        <p>Search page</p>
-      </Layout>}/>
+        <Route
+          path="/register"
+          element={
+            <Layout>
+              <Register />
+            </Layout>
+          }
+        />
 
-      <Route path="/register" element={ <Layout>
-        < Register/>
-      </Layout>} />
+        <Route
+          path="/sign-in"
+          element={
+            <Layout>
+              <SignIn />
+            </Layout>
+          }
+        />
 
+        <Route
+          path="/forgot-password"
+          element={
+            <Layout>
+              <ForgotPasswordPage />
+            </Layout>
+          }
+        />
 
-      <Route path="/sign-in" element={ <Layout>
-        < SignIn/>
-      </Layout>} />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <Layout>
+              <ResetPasswordPage />
+            </Layout>
+          }
+        />
 
-      <Route path="/forgot-password" element={ <Layout>
-        < ForgotPasswordPage/>
-      </Layout>} />
+        <Route
+          path="/aboutus"
+          element={
+            <Layout>
+              <Aboutus />
+            </Layout>
+          }
+        />
 
-      <Route path="/reset-password/:resetToken" element={ <Layout>
-        < ResetPasswordPage/>
-      </Layout>} />
+        <Route
+          path="/contactus"
+          element={
+            <Layout>
+              <Contactus />
+            </Layout>
+          }
+        />
 
-      <Route path="/aboutus" element={ <Layout>
-        < Aboutus/>
-      </Layout>} />
-
-      <Route path="/contactus" element={ <Layout>
-        < Contactus/>
-      </Layout>} />
-
-
-
-      <Route path="*" element={<Navigate to="/" />}/>
- 
- </Routes>
-   </Router>
-  )
-}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;

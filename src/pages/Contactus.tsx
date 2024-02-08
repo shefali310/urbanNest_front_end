@@ -1,22 +1,28 @@
 const ContactUs = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission 
+    // Handle form submission
   };
 
   return (
     <div className="bg-gray-800 pb-16 pt-3">
       <div className="container mx-auto flex flex-col gap-2 ">
-        <h1 className="text-5xl sm:text-2xl pl-5 text-white font-bold p-2">Contact Us</h1>
+        <h1 className="text-5xl sm:text-2xl pl-5 text-white font-bold p-2">
+          Contact Us
+        </h1>
         <p className="text-2xl sm:text-xl pl-5 text-white p-2">
-          Have questions or need assistance? Feel free to reach out to our friendly team.
+          Have questions or need assistance? Feel free to reach out to our
+          friendly team.
         </p>
 
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="mt-8 p-5">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
-              <label className="block text-white text-sm font-semibold mb-2" htmlFor="name">
+              <label
+                className="block text-white text-sm font-semibold mb-2"
+                htmlFor="name"
+              >
                 Your Name
               </label>
               <input
@@ -30,7 +36,10 @@ const ContactUs = () => {
             </div>
 
             <div className="flex-1">
-              <label className="block text-white text-sm font-semibold mb-2" htmlFor="email">
+              <label
+                className="block text-white text-sm font-semibold mb-2"
+                htmlFor="email"
+              >
                 Your Email
               </label>
               <input
@@ -45,7 +54,10 @@ const ContactUs = () => {
           </div>
 
           <div className="mt-4">
-            <label className="block text-white text-sm font-semibold mb-2" htmlFor="message">
+            <label
+              className="block text-white text-sm font-semibold mb-2"
+              htmlFor="message"
+            >
               Message
             </label>
             <textarea
@@ -70,9 +82,9 @@ const ContactUs = () => {
         <div className="mt-8 p-5">
           <h2 className="text-3xl text-white font-bold mb-4">Feedback</h2>
           <p className="text-white">
-            We appreciate your feedback! Please let us know how we can improve our services.
+            We appreciate your feedback! Please let us know how we can improve
+            our services.
           </p>
-         
         </div>
       </div>
     </div>

@@ -15,7 +15,6 @@ const Header = () => {
   return (
     <div className="bg-gray-800 py-6">
       <div className="container mx-auto flex justify-between items-center">
-      
         <span className="text-3xl pl-5 md:text-xl text-white font-bold tracking-tight">
           <Link to="/">UrbanNest.com</Link>
         </span>
@@ -28,10 +27,16 @@ const Header = () => {
           {isMenuOpen && (
             <div className="absolute top-16 right-0 bg-white p-4 shadow-md">
               {/* Menu items */}
-              <Link to="/aboutus" className="block mb-2 text-green-800 font-bold">
+              <Link
+                to="/aboutus"
+                className="block mb-2 text-green-800 font-bold"
+              >
                 About&nbsp;us
               </Link>
-              <Link to="/contactus" className="block mb-2 text-green-800 font-bold">
+              <Link
+                to="/contactus"
+                className="block mb-2 text-green-800 font-bold"
+              >
                 Contact&nbsp;us
               </Link>
               {isLoggedIn ? (
