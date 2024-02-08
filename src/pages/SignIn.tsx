@@ -43,7 +43,7 @@ const SignIn = () => {
     })
 
     return (
-        <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+        <form className="flex flex-col gap-5 mx-auto max-w-md p-5" onSubmit={onSubmit}>
             <h2 className="text-3xl font-bold ">Sign In</h2>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -65,8 +65,12 @@ const SignIn = () => {
 
             <span className="flex items-center justify-between">
                 <span className="text-sm">Not Registered? <Link to="/register" className="font-bold underline">Create an account</Link></span>
-                <button type="submit" className="bg-green-600 text-white p-2 rounded font-bold">Login</button>
+                <span className="text-sm"><Link to="/forgot-password" className="font-bold underline">Forgot password?</Link></span>
             </span>
+          
+        <div className="w-200">  
+         <button type="submit" className="bg-green-600 text-white p-2 rounded font-bold">Login</button>
+         </div> 
         </form>
     )
 }
