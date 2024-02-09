@@ -7,6 +7,7 @@ interface ResetPasswordParams {
 }
 
 const ResetPassword = () => {
+
   const { token } = useParams<ResetPasswordParams>();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,7 +38,7 @@ const ResetPassword = () => {
 
       if (response.ok) {
         console.log("Password reset successful");
-        navigate("/login");
+        navigate("/sign-in");
       } else {
         const responseData = await response.json();
         console.error("Failed to reset password:", responseData.message);
