@@ -1,11 +1,18 @@
 import { useState } from "react";
+import { useAppContext } from "../contexts/AppContext";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
+  const { showToast } = useAppContext();
+
   //  handle reset password function
   const handleResetPassword = async () => {
     if (!email) {
+      showToast({
+        message: `Email is required`,
+        type: "ERROR",
+      });
       console.error("Email is required");
       return;
     }
@@ -23,9 +30,17 @@ const ForgotPassword = () => {
       );
 
       if (response.ok) {
-        console.log("Password reset initiated successfully");
+        showToast({
+          message: `Password reset link sent to ${email}`,
+          type: "SUCCESS",
+        });
       } else {
         const responseData = await response.json();
+        showToast({
+          message: `Email is not exist`,
+          type: "ERROR",
+        });
+
         console.error(
           "Failed to initiate password reset:",
           responseData.message
@@ -39,8 +54,7 @@ const ForgotPassword = () => {
   return (
     <div className="flex flex-col items-center mt-10 w-full">
       <h6 className="text-2xl font-bold mb-4 p-3">
-        Enter the email associated with your account and we will send you a link
-        to reset your password.
+        Enter the email associated with your account to reset your password.
       </h6>
       <input
         type="email"

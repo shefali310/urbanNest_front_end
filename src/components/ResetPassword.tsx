@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAppContext } from "../contexts/AppContext";
 
 interface ResetPasswordParams {
   token: string | undefined;
@@ -7,6 +8,7 @@ interface ResetPasswordParams {
 }
 
 const ResetPassword = () => {
+  const { showToast } = useAppContext();
 
   const { token } = useParams<ResetPasswordParams>();
   const [password, setPassword] = useState("");
@@ -15,11 +17,20 @@ const ResetPassword = () => {
 
   const handleResetPassword = async () => {
     if (!password || !confirmPassword) {
+      showToast({
+        message: `Enter both passwords!`,
+        type: "ERROR",
+      });
+
       console.error("Please enter both password and confirm password");
       return;
     }
 
     if (password !== confirmPassword) {
+      showToast({
+        message: `Passwords do not match`,
+        type: "ERROR",
+      });
       console.error("Passwords do not match");
       return;
     }
@@ -37,10 +48,19 @@ const ResetPassword = () => {
       );
 
       if (response.ok) {
-        console.log("Password reset successful");
+        showToast({
+          message: `Password reset Successful!`,
+          type: "SUCCESS",
+        });
+
         navigate("/sign-in");
       } else {
         const responseData = await response.json();
+
+        showToast({
+          message: `Failed to reset password`,
+          type: "ERROR",
+        });
         console.error("Failed to reset password:", responseData.message);
       }
     } catch (error) {

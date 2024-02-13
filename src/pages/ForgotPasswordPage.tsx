@@ -1,7 +1,7 @@
-import React from "react";
+
 import ForgotPassword from "../components/ForgotPassword";
 
-const ForgotPasswordPage: React.FC = () => {
+const ForgotPasswordPage = () => {
   return (
     <div className="container mx-auto">
       <ForgotPassword />

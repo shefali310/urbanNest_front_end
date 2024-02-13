@@ -1,7 +1,7 @@
-import React from "react";
+
 import ResetPassword from "../components/ResetPassword";
 
-const ResetPasswordPage: React.FC = () => {
+const ResetPasswordPage = () => {
   return (
     <div className="container mx-auto">
       <ResetPassword />
