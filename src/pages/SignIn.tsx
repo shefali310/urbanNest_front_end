@@ -5,39 +5,58 @@ import { useAppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/urbanNest.css";
 
+// Define the form data interface for sign-in
 export type SignInFormData = {
   email: string;
   password: string;
 };
 
+
 const SignIn = () => {
+
+  // Access the showToast function from the AppContext
   const { showToast } = useAppContext();
-
+  
+  // Access the navigation function from react-router-dom
   const navigate = useNavigate();
-
+  
+  // Access the query client for managing queries in React Query
   const queryClient = useQueryClient();
 
+  // Use react-hook-form to manage form state and validation
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<SignInFormData>();
 
+  // Use react-query mutation for handling the sign-in API call
   const mutation = useMutation(apiClient.signIn, {
+    // On successful sign-in
     onSuccess: async () => {
+      // Show a success message
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });
+      
+      // Invalidate the "validateToken" query to reflect the user's signed-in state
       await queryClient.invalidateQueries("validateToken");
+      
+      // Navigate to the home page
       navigate("/");
     },
+    // On error during sign-in
     onError: (error: Error) => {
+      // Show an error message
       showToast({ message: error.message, type: "ERROR" });
     },
   });
 
+  // Handle form submission
   const onSubmit = handleSubmit((data) => {
+    // Trigger the sign-in mutation
     mutation.mutate(data);
   });
 
+  // Render the SignIn component with the sign-in form
   return (
     <form
       className="flex flex-col border-2 border-black  rounded-md gap-5 mx-auto max-w-md p-5"
@@ -66,7 +85,7 @@ const SignIn = () => {
             required: "This field is required",
             minLength: {
               value: 6,
-              message: "password must be at least  6 characters",
+              message: "Password must be at least 6 characters",
             },
           })}
         ></input>
@@ -100,5 +119,6 @@ const SignIn = () => {
     </form>
   );
 };
+
 
 export default SignIn;

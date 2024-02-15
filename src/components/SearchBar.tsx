@@ -6,18 +6,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import "../css/urbanNest.css";
 
+
 const SearchBar = () => {
+  // Access the navigation function from react-router-dom
   const navigate = useNavigate();
+  
+  // Access the search context
   const search = useSearchContext();
 
+  // State variables for search parameters
   const [destination, setDestination] = useState<string>(search.destination);
   const [checkIn, setCheckIn] = useState<Date>(search.checkIn);
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
 
+  // Handle form submission
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    // Save search values in the context and navigate to the search page
     search.saveSearchValues(
       destination,
       checkIn,
@@ -28,10 +35,12 @@ const SearchBar = () => {
     navigate("/search");
   };
 
+  // Set min and max dates for the date picker
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
 
+  // Render the SearchBar component with input fields and buttons
   return (
     <form
       onSubmit={handleSubmit}
@@ -110,5 +119,6 @@ const SearchBar = () => {
     </form>
   );
 };
+
 
 export default SearchBar;

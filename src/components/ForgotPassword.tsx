@@ -2,13 +2,18 @@ import { useState } from "react";
 import { useAppContext } from "../contexts/AppContext";
 import "../css/urbanNest.css";
 
+
 const ForgotPassword = () => {
+  
+  // State variable for email
   const [email, setEmail] = useState("");
 
+  // Access the showToast function from the AppContext
   const { showToast } = useAppContext();
 
-  //  handle reset password function
+  // Handle the logic for initiating password reset
   const handleResetPassword = async () => {
+    // Check if email is provided
     if (!email) {
       showToast({
         message: `Email is required`,
@@ -19,6 +24,7 @@ const ForgotPassword = () => {
     }
 
     try {
+      // Make a POST request to initiate password reset
       const response = await fetch(
         "http://localhost:3000/api/auth/forgot-password",
         {
@@ -30,12 +36,14 @@ const ForgotPassword = () => {
         }
       );
 
+      // Check if the request was successful
       if (response.ok) {
         showToast({
           message: `Password reset link sent to ${email}`,
           type: "SUCCESS",
         });
       } else {
+        // If the request was not successful, display an error message
         const responseData = await response.json();
         showToast({
           message: `Email is not exist`,
@@ -48,10 +56,12 @@ const ForgotPassword = () => {
         );
       }
     } catch (error) {
+      // Handle any unexpected errors during the password reset initiation process
       console.error("Error initiating password reset:", error);
     }
   };
 
+  // Render the ForgotPassword component with input field and a continue button
   return (
     <div className="flex flex-col border-2 border-black rounded-md pb-5 items-center mt-50 w-full">
       <h6 className="text-2xl text-orange font-bold mb-4 p-3">
@@ -74,5 +84,6 @@ const ForgotPassword = () => {
     </div>
   );
 };
+
 
 export default ForgotPassword;
