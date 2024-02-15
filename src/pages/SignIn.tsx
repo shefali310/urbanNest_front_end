@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
+import "../css/urbanNest.css";
 
 export type SignInFormData = {
   email: string;
@@ -39,10 +40,10 @@ const SignIn = () => {
 
   return (
     <form
-      className="flex flex-col gap-5 mx-auto max-w-md p-5"
+      className="flex flex-col border-2 border-black  rounded-md gap-5 mx-auto max-w-md p-5"
       onSubmit={onSubmit}
     >
-      <h2 className="text-3xl font-bold ">Sign In</h2>
+      <h2 className="text-3xl text-orange font-bold ">Sign In</h2>
 
       <label className="text-gray-700 text-sm font-bold flex-1">
         Email
@@ -91,7 +92,7 @@ const SignIn = () => {
       <div className="w-200">
         <button
           type="submit"
-          className="bg-green-600 text-white p-2 rounded font-bold"
+          className="bg-orange text-gray p-2 rounded font-bold"
         >
           Login
         </button>

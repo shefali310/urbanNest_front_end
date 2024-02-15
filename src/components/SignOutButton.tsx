@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
+import "../css/urbanNest.css";
 
 const SignOutButton = () => {
   const { showToast } = useAppContext();
@@ -24,7 +25,7 @@ const SignOutButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="text-green-600 px-3 font-bold bg-white hover:bg-gray-100"
+      className="text-orange shadow-md px-3 font-bold bg-white hover:bg-gray-100"
     >
       Sign Out
     </button>

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
+import "../css/urbanNest.css";
 
 export type RegisterFormData = {
   firstName: string;
@@ -42,10 +43,12 @@ const Register = () => {
   });
   return (
     <form
-      className="flex flex-col gap-5 mx-auto max-w-md p-5"
+      className="flex flex-col border-2 border-black rounded-md gap-5 mx-auto max-w-md p-5"
       onSubmit={onSubmit}
     >
-      <h2 className="text-3xl font-bold">Create an Account</h2>
+      <h2 className="text-3xl text-orange text-left font-bold">
+        Create an Account
+      </h2>
       <div className="flex flex-col md:flex-row gap-5">
         <label className="text-gray-700 text-sm font-bold flex-1">
           First Name
@@ -129,7 +132,7 @@ const Register = () => {
         </span>
         <button
           type="submit"
-          className="bg-green-600 text-white p-2 rounded font-bold"
+          className="bg-orange text-gray p-2 rounded font-bold"
         >
           Create Account
         </button>

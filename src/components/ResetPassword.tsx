@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
+import "../css/urbanNest.css";
 
 interface ResetPasswordParams {
   token: string | undefined;
@@ -70,7 +71,9 @@ const ResetPassword = () => {
 
   return (
     <div className="flex flex-col items-center mt-10">
-      <h2 className="text-2xl font-bold mb-4">Reset your Password here:</h2>
+      <h2 className="text-2xl text-orange font-bold mb-4">
+        Reset your Password here:
+      </h2>
       <input
         type="password"
         placeholder="Enter your new password"
@@ -85,10 +88,7 @@ const ResetPassword = () => {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
-      <button
-        className="bg-green-500 text-white p-2"
-        onClick={handleResetPassword}
-      >
+      <button className="bg-orange text-gray p-2" onClick={handleResetPassword}>
         Reset Password
       </button>
     </div>

@@ -4,6 +4,7 @@ import { MdTravelExplore } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import "../css/urbanNest.css";
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -99,10 +100,10 @@ const SearchBar = () => {
         />
       </div>
       <div className="flex flex-row justify-center items-center col-span-full">
-        <button className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 bg-green-600 text-white h-full p-2 font-bold text-xl hover:bg-green-500">
+        <button className=" md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 bg-gray-600 text-orange h-full p-2 font-bold text-xl hover:bg-gray-500">
           Search
         </button>
-        <button className="w-full md:w-1/4 lg:w-1/5 xl:w-1/6 2xl:w-1/7 bg-red-600 text-white h-full p-2 ml-4 font-bold text-xl hover:bg-red-500">
+        <button className=" md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 bg-gray-600 text-orange h-full p-2 ml-4 font-bold text-xl hover:bg-gray-500">
           Clear
         </button>
       </div>

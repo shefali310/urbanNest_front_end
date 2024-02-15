@@ -1,4 +1,3 @@
-
 import ForgotPassword from "../components/ForgotPassword";
 
 const ForgotPasswordPage = () => {

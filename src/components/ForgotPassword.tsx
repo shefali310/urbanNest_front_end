@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../contexts/AppContext";
+import "../css/urbanNest.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -52,8 +53,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10 w-full">
-      <h6 className="text-2xl font-bold mb-4 p-3">
+    <div className="flex flex-col border-2 border-black rounded-md pb-5 items-center mt-50 w-full">
+      <h6 className="text-2xl text-orange font-bold mb-4 p-3">
         Enter the email associated with your account to reset your password.
       </h6>
       <input
@@ -65,7 +66,7 @@ const ForgotPassword = () => {
       />
       <button
         type="submit"
-        className="bg-green-600 text-white p-2"
+        className="bg-orange font-bold text-gray p-2"
         onClick={handleResetPassword}
       >
         Continue
