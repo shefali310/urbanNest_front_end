@@ -12,10 +12,11 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Aboutus from "./pages/Aboutus";
 import Contactus from "./pages/Contactus";
 import AddHotel from "./pages/AddHotel";
+import MyHotels from "./pages/MyHotels";
 import { useAppContext } from "./contexts/AppContext";
 
 const App = () => {
-  const {isLoggedIn} = useAppContext();
+  const { isLoggedIn } = useAppContext();
   return (
     <Router>
       <Routes>
@@ -91,12 +92,27 @@ const App = () => {
           }
         />
 
-        {isLoggedIn && <>
-        <Route  path="/add-hotel"  element={
+        {isLoggedIn && (
+          <>
+            <Route
+              path="/add-hotel"
+              element={
+                <Layout>
+                  <AddHotel />
+                </Layout>
+              }
+            />
+          </>
+        )}
+
+        <Route
+          path="/my-hotels"
+          element={
             <Layout>
-              <AddHotel />
+              <MyHotels />
             </Layout>
-          }/> </> }
+          }
+        />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
