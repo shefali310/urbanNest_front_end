@@ -6,6 +6,7 @@ import GuestSection from "./GuestSection";
 import ImagesSection from "./ImagesSection";
 import { HotelType } from "../../../../back-end/src/models/hotel";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // Defining the structure of the form data
 export type HotelFormData = {
@@ -32,7 +33,6 @@ type Props = {
 
 // Main component for managing hotel form
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
-
   // Initializing form methods using useForm hook
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
@@ -44,7 +44,6 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
 
   // Handling form submission
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
-
     // Creating a FormData object to handle file uploads
     const formData = new FormData();
 
@@ -85,27 +84,39 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   // Rendering the form using FormProvider to provide form methods to child components
   return (
     <FormProvider {...formMethods}>
-      <form className="flex flex-col gap-10 bg-gray-200 p-5 rounded shadow-md" onSubmit={onSubmit}>
+      <form
+        className="flex flex-col gap-10 bg-gray-200 p-5 rounded shadow-md"
+        onSubmit={onSubmit}
+      >
         {/* Including various sections of the form as separate components */}
         <DetailsSection />
         <TypeSection />
         <FacilitiesSection />
         <GuestSection />
         <ImagesSection />
-        {/* Submit button with loading state */}
-        <span className="flex justify-center">
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="bg-orange text-white pt-2 pb-2 pl-4 pr-4 font-bold hover:bg-gray-500 text-xl disabled:bg-gray-800"
-          >
-            {isLoading ? "Adding..." : "ADD"}
-          </button>
-        </span>
+        {/* Cancel and Submit buttons */}
+        <div className="flex justify-between ">
+          <span>
+            <Link
+              to="/my-hotels"
+              className="bg-orange text-white pt-2 pb-2 pl-4 pr-4 font-bold hover:bg-gray-800 text-xl"
+            >
+              Cancel
+            </Link>
+          </span>
+          <span>
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="bg-orange text-white pt-2 pb-2 pl-4 pr-4 font-bold hover:bg-gray-500 text-xl disabled:bg-gray-800"
+            >
+              {isLoading ? "Saving..." : "Save"}
+            </button>
+          </span>
+        </div>
       </form>
     </FormProvider>
   );
 };
-
 
 export default ManageHotelForm;

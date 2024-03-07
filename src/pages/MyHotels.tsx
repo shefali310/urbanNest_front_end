@@ -5,13 +5,27 @@ import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
 import { BsBuilding, BsMap } from "react-icons/bs";
 
 const MyHotels = () => {
-  const { data: hotelData } = useQuery(
+  const { data: hotelData, refetch } = useQuery(
     "fetchMyHotels",
     apiClient.fetchMyHotels,
     {
       onError: () => {},
     }
   );
+
+  const handleDelete = async (hotelId: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this hotel?");
+    
+    if (confirmDelete) {
+      try {
+        await apiClient.deleteMyHotel(hotelId);
+        // Refetch the data after successful deletion
+        refetch();
+      } catch (error) {
+        console.error('Error deleting hotel:', error);
+      }
+    }
+  };
 
   if (!hotelData) {
     return <span>No Hotels found</span>;
@@ -64,7 +78,15 @@ const MyHotels = () => {
                 to={`/edit-hotel/${hotel._id}`}
                 className="flex bg-orange text-white text-bold font-bold   p-2 hover:bg-gray-400"
               >
-                View Details
+                View Hotel
+              </Link>
+
+              <Link
+                to="#"
+                onClick={() => handleDelete(hotel._id)}
+                className="flex bg-red-500 text-white text-bold font-bold p-2 ml-3 hover:bg-red-700"
+              >
+                Delete Hotel
               </Link>
             </span>
           </div>

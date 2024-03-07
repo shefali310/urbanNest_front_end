@@ -1,7 +1,10 @@
+
 import { useFormContext } from "react-hook-form";
 import { HotelFormData } from "./ManageHotelForm";
 
+
 const ImagesSection = () => {
+  // Destructuring values from useFormContext hook
   const {
     register,
     formState: { errors },
@@ -9,19 +12,23 @@ const ImagesSection = () => {
     setValue,
   } = useFormContext<HotelFormData>();
 
+  // Access existingImageUrls from form data
   const existingImageUrls = watch("imageUrls");
 
+  // Handler function to delete an image
   const handleDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     imageUrl: string
   ) => {
     event.preventDefault();
+    // Remove the specified imageUrl from the imageUrls array
     setValue(
       "imageUrls",
       existingImageUrls.filter((url) => url !== imageUrl)
     );
   };
 
+  // Render ImagesSection component
   return (
     <div>
       <h2 className="text-2xl font-bold mb-3">Images</h2>
@@ -29,8 +36,8 @@ const ImagesSection = () => {
         {existingImageUrls && (
           <div className="grid grid-cols-6 gap-4">
             {existingImageUrls.map((url) => (
-              <div className="relative group">
-                <img src={url} className="min-h-full object-cover" />
+              <div className="relative group" key={url}>
+                <img src={url} className="min-h-full object-cover" alt={`Image ${url}`} />
                 <button
                   onClick={(event) => handleDelete(event, url)}
                   className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white"
@@ -42,12 +49,14 @@ const ImagesSection = () => {
           </div>
         )}
 
+        {/* Input for uploading image files */}
         <input
           type="file"
           multiple
           accept="image/*"
           className="w-full text-gray-700 font-normal"
           {...register("imageFiles", {
+            // Validation for the number of images
             validate: (imageFiles) => {
               const totalLength =
                 imageFiles.length + (existingImageUrls?.length || 0);
@@ -65,6 +74,8 @@ const ImagesSection = () => {
           })}
         />
       </div>
+      
+      {/* Display error message if there are validation errors for imageFiles */}
       {errors.imageFiles && (
         <span className="text-red-500 text-sm font-bold">
           {errors.imageFiles.message}
@@ -73,5 +84,6 @@ const ImagesSection = () => {
     </div>
   );
 };
+
 
 export default ImagesSection;
