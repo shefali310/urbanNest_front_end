@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, } from "react-query";
 import { useParams } from "react-router-dom";
 import * as apiClient from "../api-client";
 import ManageHotelForm from "../forms/ManageHotelForm/ManageHotelForm";

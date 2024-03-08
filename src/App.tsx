@@ -15,6 +15,10 @@ import AddHotel from "./pages/AddHotel";
 import MyHotels from "./pages/MyHotels";
 import { useAppContext } from "./contexts/AppContext";
 import EditHotel from "./pages/EditHotel";
+import Search from "./pages/Search";
+import Detail from "./pages/Detail";
+import MyBookings from "./pages/MyBookings";
+import Home from "./components/Home";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -34,7 +38,16 @@ const App = () => {
           path="/search"
           element={
             <Layout>
-              <p>Search page</p>
+              <Search />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/detail/:hotelId"
+          element={
+            <Layout>
+              <Detail />
             </Layout>
           }
         />
@@ -105,6 +118,15 @@ const App = () => {
             />
 
             <Route
+              path="/carousel-hotels"
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+
+            <Route
               path="/my-hotels"
               element={
                 <Layout>
@@ -118,6 +140,15 @@ const App = () => {
               element={
                 <Layout>
                   <EditHotel />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/my-bookings"
+              element={
+                <Layout>
+                  <MyBookings />
                 </Layout>
               }
             />

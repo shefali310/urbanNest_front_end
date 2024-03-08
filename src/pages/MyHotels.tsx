@@ -19,7 +19,7 @@ const MyHotels = () => {
     if (confirmDelete) {
       try {
         await apiClient.deleteMyHotel(hotelId);
-        // Refetch the data after successful deletion
+       
         refetch();
       } catch (error) {
         console.error('Error deleting hotel:', error);
