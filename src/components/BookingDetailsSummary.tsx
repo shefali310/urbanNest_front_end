@@ -18,32 +18,34 @@ const BookingDetailsSummary = ({
   hotel,
 }: Props) => {
   return (
-    <div className="grid gap-4 rounded-lg border border-slate-300 p-5 h-fit">
-      <h2 className="text-xl font-bold">Your Booking Details</h2>
-      <div className="border-b py-2">
-        Location:
-        <div className="font-bold">{`${hotel.name}, ${hotel.city}, ${hotel.country}`}</div>
+    <div className="border rounded-lg border-slate-300 p-5 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">Your Booking Details</h2>
+
+      <div className="mb-4">
+        <p className="font-bold">{`${hotel.name}, ${hotel.city}, ${hotel.country}`}</p>
+        <p className="text-gray-600">Location</p>
       </div>
-      <div className="flex justify-between">
+
+      <div className="flex justify-between mb-4">
         <div>
-          Check-in
-          <div className="font-bold"> {checkIn.toDateString()}</div>
+          <p className="font-bold">{checkIn.toDateString()}</p>
+          <p className="text-gray-600">Check-in</p>
         </div>
+
         <div>
-          Check-out
-          <div className="font-bold"> {checkOut.toDateString()}</div>
+          <p className="font-bold">{checkOut.toDateString()}</p>
+          <p className="text-gray-600">Check-out</p>
         </div>
       </div>
-      <div className="border-t border-b py-2">
-        Total length of stay:
-        <div className="font-bold">{numberOfNights} nights</div>
+
+      <div className="border-t border-b py-2 mb-4">
+        <p className="font-bold">{numberOfNights} nights</p>
+        <p className="text-gray-600">Total length of stay</p>
       </div>
 
       <div>
-        Guests{" "}
-        <div className="font-bold">
-          {adultCount} adults & {childCount} children
-        </div>
+        <p className="font-bold">{`${adultCount} adults & ${childCount} children`}</p>
+        <p className="text-gray-600">Guests</p>
       </div>
     </div>
   );

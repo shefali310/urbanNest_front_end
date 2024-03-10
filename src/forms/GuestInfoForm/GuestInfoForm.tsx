@@ -4,11 +4,13 @@ import { useSearchContext } from "../../contexts/SearchContext";
 import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// Type definition for the component props
 type Props = {
   hotelId: string;
   pricePerNight: number;
 };
 
+// Type definition for the form data
 type GuestInfoFormData = {
   checkIn: Date;
   checkOut: Date;
@@ -17,11 +19,14 @@ type GuestInfoFormData = {
 };
 
 const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
+
+  // Accessing search context and authentication status from App context
   const search = useSearchContext();
   const { isLoggedIn } = useAppContext();
   const navigate = useNavigate();
   const location = useLocation();
 
+  // React Hook Form methods for form handling
   const {
     watch,
     register,
@@ -36,14 +41,15 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       childCount: search.childCount,
     },
   });
-
+// Watch the check-in and check-out dates
   const checkIn = watch("checkIn");
   const checkOut = watch("checkOut");
-
+// Set minimum and maximum date for the date picker
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
 
+    // Handle sign-in click
   const onSignInClick = (data: GuestInfoFormData) => {
     search.saveSearchValues(
       "",
@@ -55,6 +61,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
     navigate("/sign-in", { state: { from: location } });
   };
 
+  // Handle form submission
   const onSubmit = (data: GuestInfoFormData) => {
     search.saveSearchValues(
       "",

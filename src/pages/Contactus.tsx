@@ -7,12 +7,12 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="bg-white border-2 m-2 border-black rounded-md pb-16 pt-3">
+    <div className="bg-gray-300  m-2  rounded-md pb-16 pt-3">
       <div className="container mx-auto flex flex-col gap-2 ">
         <h2 className="text-3xl text-orange font-bold mb-4 pl-2">
           Connect with us
         </h2>
-        <p className="text-2xl sm:text-xl  text-orange p-2">
+        <p className="text-2xl sm:text-xl  text-gray p-2">
           Have questions or need assistance? Feel free to reach out to our
           friendly team.
         </p>
@@ -22,7 +22,7 @@ const ContactUs = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <label
-                className="block text-orange text-sm font-semibold mb-2"
+                className="block text-gray text-sm font-semibold mb-2"
                 htmlFor="name"
               >
                 Your Name
@@ -31,7 +31,7 @@ const ContactUs = () => {
                 type="text"
                 id="name"
                 name="name"
-                className="w-full px-4 py-2 rounded-md bg-gray-600 text-orange"
+                className="w-full px-4 py-2 rounded-md bg-white text-orange"
                 placeholder="Name"
                 required
               />
@@ -39,7 +39,7 @@ const ContactUs = () => {
 
             <div className="flex-1">
               <label
-                className="block text-orange text-sm font-semibold mb-2"
+                className="block text-gray text-sm font-semibold mb-2"
                 htmlFor="email"
               >
                 Your Email
@@ -48,7 +48,7 @@ const ContactUs = () => {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full px-4 py-2 rounded-md bg-gray-600 text-orange"
+                className="w-full px-4 py-2 rounded-md bg-white text-orange"
                 placeholder="name@example.com"
                 required
               />
@@ -57,7 +57,7 @@ const ContactUs = () => {
 
           <div className="mt-4">
             <label
-              className="block text-orange text-sm font-semibold mb-2"
+              className="block text-gray text-sm font-semibold mb-2"
               htmlFor="message"
             >
               Message
@@ -65,7 +65,7 @@ const ContactUs = () => {
             <textarea
               id="message"
               name="message"
-              className="w-full px-4 py-2 rounded-md bg-gray-600 text-orange"
+              className="w-full px-4 py-2 rounded-md bg-white text-orange"
               placeholder="Your message..."
               rows={4}
               required
@@ -74,7 +74,7 @@ const ContactUs = () => {
 
           <button
             type="submit"
-            className="mt-4 bg-orange text-gray font-bold py-2 px-4 rounded-md hover:bg-white-600 transition duration-300"
+            className="mt-4 bg-orange text-white font-bold py-2 px-4 rounded-md hover:bg-white-600 transition duration-300"
           >
             Submit
           </button>

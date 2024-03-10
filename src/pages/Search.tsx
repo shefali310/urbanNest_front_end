@@ -10,7 +10,11 @@ import FacilitiesFilter from "../components/FacilitiesFilter";
 import PriceFilter from "../components/PriceFilter";
 
 const Search = () => {
+  
+  // Access search parameters from the context
   const search = useSearchContext();
+
+  // State for managing pagination, filters, and sorting
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([]);
@@ -18,6 +22,7 @@ const Search = () => {
   const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
   const [sortOption, setSortOption] = useState<string>("");
 
+// Construct search parameters object based on user input
   const searchParams = {
     destination: search.destination,
     checkIn: search.checkIn.toISOString(),
@@ -31,11 +36,12 @@ const Search = () => {
     maxPrice: selectedPrice?.toString(),
     sortOption,
   };
-
+// Fetch hotel data using React Query
   const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
     apiClient.searchHotels(searchParams)
   );
 
+  // Handle changes in star rating filter
   const handleStarsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const starRating = event.target.value;
 
@@ -46,6 +52,7 @@ const Search = () => {
     );
   };
 
+   // Handle changes in hotel type filter
   const handleHotelTypeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -57,7 +64,7 @@ const Search = () => {
         : prevHotelTypes.filter((hotel) => hotel !== hotelType)
     );
   };
-
+// Handle changes in facility filter
   const handleFacilityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const facility = event.target.value;
 

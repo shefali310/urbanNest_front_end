@@ -59,7 +59,7 @@ const SignIn = () => {
   // Render the SignIn component with the sign-in form
   return (
     <form
-      className="flex flex-col border-2 border-black  rounded-md gap-5 mx-auto max-w-md p-5"
+      className="flex flex-col bg-gray-300 rounded-md gap-5 mx-auto max-w-md p-5"
       onSubmit={onSubmit}
     >
       <h2 className="text-3xl text-orange font-bold ">Sign In</h2>
@@ -111,7 +111,7 @@ const SignIn = () => {
       <div className="w-200">
         <button
           type="submit"
-          className="bg-orange text-gray p-2 rounded font-bold"
+          className="bg-orange text-white p-2 rounded font-bold"
         >
           Login
         </button>

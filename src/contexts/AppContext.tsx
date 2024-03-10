@@ -2,32 +2,36 @@ import React, { useContext, useState } from "react";
 import Toast from "../components/Toast";
 import { useQuery } from "react-query";
 import * as apiClient from "../api-client";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 
-// Define the structure of a toast message
+// Stripe public key retrieved from environment variables
+const STRIPE_PUB_KEY = import.meta.env.VITE_STRIPE_PUB_KEY || "";
+
+
 type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
 };
 
-// Define the structure of the AppContext
+// Type definition for the application context
 type AppContext = {
   showToast: (toastMessage: ToastMessage) => void;
   isLoggedIn: boolean;
+  stripePromise: Promise<Stripe | null>;
 };
 
-// Create the AppContext using React.createContext
+// Creating the React context
 const AppContext = React.createContext<AppContext | undefined>(undefined);
 
-// AppContextProvider component to provide the context to its children
-export const AppContextProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  // State to manage the toast message
+// Asynchronously loading the Stripe object
+const stripePromise = loadStripe(STRIPE_PUB_KEY);
+
+// AppContextProvider component that serves as the context provider
+export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
+  // State for managing toast messages
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
 
-  // Use the "validateToken" query to check if the user is logged in
+  // UseQuery hook to check if the user is logged in by validating the token
   const { isError } = useQuery("validateToken", apiClient.validateToken, {
     retry: false,
   });
@@ -36,14 +40,13 @@ export const AppContextProvider = ({
     <AppContext.Provider
       value={{
         showToast: (toastMessage) => {
-          // Set the toast message when showToast is called
           setToast(toastMessage);
         },
-        // Determine if the user is logged in based on the "validateToken" query
         isLoggedIn: !isError,
+        stripePromise,
       }}
     >
-      {/* Display the Toast component if there is a toast message */}
+      {/* Display the Toast component if a toast message is present */}
       {toast && (
         <Toast
           message={toast.message}
@@ -51,16 +54,13 @@ export const AppContextProvider = ({
           onClose={() => setToast(undefined)}
         />
       )}
-      {/* Render the children components */}
       {children}
     </AppContext.Provider>
   );
 };
 
-// Custom hook to use the AppContext
+// Custom hook for accessing the application context within components
 export const useAppContext = () => {
-  // Use the useContext hook to access the AppContext
   const context = useContext(AppContext);
-  // Return the context as AppContext
   return context as AppContext;
 };

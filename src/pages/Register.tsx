@@ -62,7 +62,7 @@ const Register = () => {
   // Render the Register component with the registration form
   return (
     <form
-      className="flex flex-col border-2 border-black rounded-md gap-5 mx-auto max-w-md p-5"
+      className="flex flex-col rounded-md bg-gray-300 gap-5 mx-auto max-w-md p-5"
       onSubmit={onSubmit}
     >
       <h2 className="text-3xl text-orange text-left font-bold">
@@ -151,7 +151,7 @@ const Register = () => {
         </span>
         <button
           type="submit"
-          className="bg-orange text-gray p-2 rounded font-bold"
+          className="bg-orange text-white p-2 rounded font-bold"
         >
           Create Account
         </button>

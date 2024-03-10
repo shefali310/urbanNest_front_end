@@ -1,36 +1,27 @@
-
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import * as apiClient from '../api-client';
-import Carousel from '../components/Carousel'; // Assuming you have a Carousel component
-import { HotelType } from '../../../back-end/src/models/hotel';
-
+import { useQuery } from "react-query";
+import * as apiClient from "../api-client";
+import LatestDestinationCard from "../components/LatestDestinationCard";
 
 const Home = () => {
-  const { hotelId } = useParams();
-
-
-  const { data: hotel, isLoading, isError } = useQuery<HotelType, Error>(
-    ['fetchMyHotelById', hotelId],
-    () => apiClient.fetchMyHotelById(hotelId || ''),
-    {
-      enabled: !!hotelId,
-    }
+  const { data: hotels } = useQuery("fetchQuery", () =>
+    apiClient.fetchHotels()
   );
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError || !hotel) {
-    return <p>Error loading hotel data.</p>;
-  }
-
   return (
-    <div>
-      <h1>{hotel.name}</h1>
-      <Carousel hotels={[hotel]} />
-      {/* Additional hotel details or actions can be added here */}
+    <div className="space-y-3">
+      <div className="text-left">
+        <h2 className="text-3xl text-orange font-bold mb-4">Travel opens your heart</h2>
+        <p className="text-gray-600">
+          Explore the world with our latest destinations, carefully curated by
+          our hosts.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {hotels?.map((hotel) => (
+          <LatestDestinationCard key={hotel._id} hotel={hotel} />
+        ))}
+      </div>
     </div>
   );
 };

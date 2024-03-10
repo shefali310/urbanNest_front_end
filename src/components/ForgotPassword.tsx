@@ -63,7 +63,7 @@ const ForgotPassword = () => {
 
   // Render the ForgotPassword component with input field and a continue button
   return (
-    <div className="flex flex-col border-2 border-black rounded-md pb-5 items-center mt-50 w-full">
+    <div className="flex flex-col bg-gray-300 rounded-md pb-5 items-center mt-50 w-full">
       <h6 className="text-2xl text-orange font-bold mb-4 p-3">
         Enter the email associated with your account to reset your password.
       </h6>
@@ -76,7 +76,7 @@ const ForgotPassword = () => {
       />
       <button
         type="submit"
-        className="bg-orange font-bold text-gray p-2"
+        className="bg-orange font-bold text-white p-2"
         onClick={handleResetPassword}
       >
         Continue
