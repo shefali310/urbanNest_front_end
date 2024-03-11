@@ -12,11 +12,12 @@ const TypeSection = () => {
   const typeWatch = watch("type");
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-3 ">Type</h2>
-      <div className="grid grid-cols-5 gap-2">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-10">
+      <h2 className="text-xl sm:text-2xl font-bold mb-3">Type</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {hotelTypes.map((type) => (
           <label
+            key={type}
             className={
               typeWatch === type
                 ? "cursor-pointer bg-orange text-sm rounded-full px-4 py-2 font-semibold"
