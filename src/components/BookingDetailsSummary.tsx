@@ -18,7 +18,7 @@ const BookingDetailsSummary = ({
   hotel,
 }: Props) => {
   return (
-    <div className="border rounded-lg border-slate-300 p-5 max-w-md mx-auto">
+    <div className="border rounded-lg bg-gray-300 p-5 max-w-md mx-auto">
       <h2 className="text-xl font-bold mb-4">Your Booking Details</h2>
 
       <div className="mb-4">

@@ -55,7 +55,7 @@ const Booking = () => {
   }
 
   return (
-    <div className="grid md:grid-cols-[1fr_2fr]">
+    <div className="grid md:grid-cols-[2fr_3fr] gap-3">
       <BookingDetailsSummary
         checkIn={search.checkIn}
         checkOut={search.checkOut}

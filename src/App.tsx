@@ -110,6 +110,14 @@ const App = () => {
         {isLoggedIn && (
           <>
             <Route
+              path="/hotel/:hotelId/booking"
+              element={
+                <Layout>
+                  <Booking />
+                </Layout>
+              }
+            />
+            <Route
               path="/add-hotel"
               element={
                 <Layout>
@@ -141,15 +149,6 @@ const App = () => {
               element={
                 <Layout>
                   <MyBookings />
-                </Layout>
-              }
-            />
-
-            <Route
-              path="/hotel/:hotelId/booking"
-              element={
-                <Layout>
-                  <Booking />
                 </Layout>
               }
             />

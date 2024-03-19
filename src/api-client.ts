@@ -2,6 +2,7 @@ import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
+ 
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
