@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
 import { useState } from "react";
+import { motion } from "framer-motion"; 
 import "../css/urbanNest.css";
 
 const Header = () => {
@@ -14,7 +15,12 @@ const Header = () => {
   const { isLoggedIn } = useAppContext();
 
   return (
-    <div className="bg-gray-800 py-6">
+    <motion.div // motion animation wrapper
+      initial={{ opacity: 0, y: -50 }} // Initial animation state
+      animate={{ opacity: 1, y: 0 }} // Animation when component is mounted
+      transition={{ duration: 0.5 }} // Animation duration
+      className="bg-gray-800 py-6 shadow-lg" 
+    >
       <div className="container mx-auto flex justify-between items-center">
         <span className="text-3xl pl-5 md:text-xl text-orange font-bold tracking-tight">
           <Link to="/">
@@ -35,9 +41,17 @@ const Header = () => {
             Menu
           </button>
           {isMenuOpen && (
-            <div className="absolute top-16 right-0 bg-white p-4 shadow-md">
+            <motion.div // motion animation wrapper
+              initial={{ opacity: 0, y: -20 }} // Initial animation state
+              animate={{ opacity: 1, y: 0 }} // Animation when menu is opened
+              transition={{ duration: 0.3 }} // Animation duration
+              className="absolute top-16 right-0 bg-white p-4 shadow-md"
+            >
               {/* Menu items */}
-              <Link to="/aboutus" className="block mb-2 text-orange font-bold">
+              <Link
+                to="/aboutus"
+                className="block mb-2 text-orange font-bold"
+              >
                 About&nbsp;us
               </Link>
               <Link
@@ -65,16 +79,16 @@ const Header = () => {
               ) : (
                 <Link
                   to="/sign-in"
-                  className="block mb-2 text-orange  font-bold"
+                  className="block mb-2 text-orange font-bold"
                 >
                   Login
                 </Link>
               )}
-            </div>
+            </motion.div>
           )}
         </div>
 
-        {/* Desktop view */}
+        {/* Desktop and Tablet view */}
         <span className="hidden md:flex space-x-2">
           {/* Menu items */}
           <Link
@@ -108,14 +122,14 @@ const Header = () => {
           ) : (
             <Link
               to="/sign-in"
-              className="flex items-center bg-white text-orange px-3 md:px-6 font-bold"
+              className="flex items-center rounded-md p-2 bg-white text-orange px-3 md:px-6 font-bold"
             >
               Login
             </Link>
           )}
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,8 +1,9 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-// import Home from "../components/Home";
 import SearchBar from "../components/SearchBar";
+import NewsletterSignup from "../components/NewsletterSignup";
+import Carousel from "../components/Carousel";
 
 interface Props {
   children: React.ReactNode;
@@ -16,8 +17,17 @@ const Layout = ({ children }: Props) => {
       <div className="container mx-auto">
         <SearchBar />
       </div>
-     
+      <div className="container mt-5 mx-auto">
+      <Carousel />
+      </div>
+
       <div className="container mx-auto py-10 flex-1">{children}</div>
+      <div>
+        {" "}
+       
+      </div>
+
+      <NewsletterSignup />
       <Footer />
     </div>
   );

@@ -7,7 +7,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="bg-gray-300  m-2  rounded-md pb-16 pt-3">
+    <div className="bg-gray-100  m-2  rounded-md pb-16 pt-3">
       <div className="container mx-auto flex flex-col gap-2 ">
         <h2 className="text-3xl text-orange font-bold mb-4 pl-2">
           Connect with us
@@ -83,7 +83,7 @@ const ContactUs = () => {
         {/* Feedback Section */}
         <div className="mt-8 p-5">
           <h2 className="text-3xl text-orange font-bold mb-4">Feedback</h2>
-          <p className="text-orange">
+          <p className="text-dark">
             We appreciate your feedback! Please let us know how we can improve
             our services.
           </p>

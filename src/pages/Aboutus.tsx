@@ -2,7 +2,7 @@ import "../css/urbanNest.css";
 
 const AboutUs = () => {
   return (
-    <div className="bg-gray-300 rounded-md  m-2 pb-16 pt-10">
+    <div className="bg-gray-100 rounded-md  m-2 pb-16 pt-10">
       <div className="container mx-auto flex flex-col gap-8 items-center">
         <h1 className=" text-center text-orange font-bold text-xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl">
           Welcome to UrbanNest - Your Ultimate Destination for Hassle-Free Hotel
