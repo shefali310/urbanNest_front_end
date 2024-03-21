@@ -6,11 +6,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import "../css/urbanNest.css";
 
-
 const SearchBar = () => {
   // Access the navigation function from react-router-dom
   const navigate = useNavigate();
-  
+
   // Access the search context
   const search = useSearchContext();
 
@@ -20,6 +19,18 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
+
+  const [roomCount, setRoomCount] = useState<number>(1);
+
+  const handleAddRoom = () => {
+    setRoomCount(roomCount + 1);
+  };
+
+  const handleRemoveRoom = () => {
+    if (roomCount > 1) {
+      setRoomCount(roomCount - 1);
+    }
+  };
 
   // Handle form submission
   const handleSubmit = (event: FormEvent) => {
@@ -56,30 +67,6 @@ const SearchBar = () => {
         />
       </div>
 
-      <div className="flex bg-white px-2 py-1 gap-2">
-        <label className="items-center flex">
-          Adults:
-          <input
-            className="w-full p-1 focus:outline-none font-bold"
-            type="number"
-            min={1}
-            max={20}
-            value={adultCount}
-            onChange={(event) => setAdultCount(parseInt(event.target.value))}
-          />
-        </label>
-        <label className="items-center flex">
-          Children:
-          <input
-            className="w-full p-1 focus:outline-none font-bold"
-            type="number"
-            min={0}
-            max={20}
-            value={childCount}
-            onChange={(event) => setChildCount(parseInt(event.target.value))}
-          />
-        </label>
-      </div>
       <div>
         <DatePicker
           selected={checkIn}
@@ -108,6 +95,57 @@ const SearchBar = () => {
           wrapperClassName="min-w-full"
         />
       </div>
+      <div className="flex flex-col  bg-white px-2 py-1 gap-1">
+        <div className="flex">
+          <label className="items-center flex">
+            Adults:
+            <input
+              className="w-full p-1 focus:outline-none font-bold"
+              type="number"
+              min={1}
+              max={20}
+              value={adultCount}
+              onChange={(event) => setAdultCount(parseInt(event.target.value))}
+            />
+          </label>
+          <label className="items-center flex">
+            Children:
+            <input
+              className="w-full p-1 focus:outline-none font-bold"
+              type="number"
+              min={0}
+              max={20}
+              value={childCount}
+              onChange={(event) => setChildCount(parseInt(event.target.value))}
+            />
+          </label>
+        </div>
+        <div className="flex  items-center flex-col">
+          <label htmlFor="rooms">Rooms</label>
+          <div className="flex items-center">
+            <button
+              onClick={handleRemoveRoom}
+              className="bg-gray-200 rounded-l-md px-2"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              id="rooms"
+              value={roomCount}
+              onChange={(e) => setRoomCount(parseInt(e.target.value))}
+              className="text-center bg-gray-100 w-12"
+            />
+            <button
+              onClick={handleAddRoom}
+              className="bg-gray-200 rounded-r-md px-2"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-row justify-center items-center col-span-full">
         <button className=" md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 bg-gray-600 text-orange h-full p-2 font-bold text-xl hover:bg-gray-500">
           Search
@@ -119,6 +157,5 @@ const SearchBar = () => {
     </form>
   );
 };
-
 
 export default SearchBar;

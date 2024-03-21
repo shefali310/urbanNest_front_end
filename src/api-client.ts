@@ -6,8 +6,10 @@ import {
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
+  
 } from "../../back-end/src/models/hotel";
 import { UserType } from "../../back-end/src/models/user";
+
 
 // Access the API base URL from the Vite environment
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -95,6 +97,9 @@ export const addMyHotel = async (hotelFormData: FormData) => {
 
   return response.json();
 };
+
+
+
 
 // Make a request to fetch the user's hotels
 export const fetchMyHotels = async (): Promise<HotelType[]> => {

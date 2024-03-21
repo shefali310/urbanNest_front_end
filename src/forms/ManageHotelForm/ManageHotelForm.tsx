@@ -5,8 +5,11 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestSection from "./GuestSection";
 import ImagesSection from "./ImagesSection";
 import { HotelType } from "../../../../back-end/src/models/hotel";
-import { useEffect } from "react";
+
+
+import { useEffect, useState }  from "react";
 import { Link } from "react-router-dom";
+import RoomTypeSelector from "./RoomTypeSelector";
 
 // Defining the structure of the form data
 export type HotelFormData = {
@@ -22,6 +25,7 @@ export type HotelFormData = {
   imageUrls: string[];
   adultCount: number;
   childCount: number;
+  room: string;
 };
 
 // Props for the ManageHotelForm component
@@ -33,6 +37,14 @@ type Props = {
 
 // Main component for managing hotel form
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
+
+  const [selectedRoomType, setSelectedRoomType] = useState<string>(""); // Initialize with an empty string
+
+  const handleRoomTypeChange = (type: string) => { // Change the type to string
+    setSelectedRoomType(type);
+  };
+
+
   // Initializing form methods using useForm hook
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
@@ -60,6 +72,7 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
     formData.append("starRating", formDataJson.starRating.toString());
     formData.append("adultCount", formDataJson.adultCount.toString());
     formData.append("childCount", formDataJson.childCount.toString());
+    formData.append("room", selectedRoomType as string);
 
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
@@ -93,6 +106,7 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
         <TypeSection />
         <FacilitiesSection />
         <GuestSection />
+        <RoomTypeSelector onChange={handleRoomTypeChange} />
         <ImagesSection />
         {/* Cancel and Submit buttons */}
         <div className="flex justify-between ">
