@@ -16,7 +16,7 @@ const Detail = () => {
   );
 
   if (!hotel) {
-    return null; 
+    return null;
   }
 
   return (
@@ -34,7 +34,10 @@ const Detail = () => {
 
           <div className="overflow-x-auto whitespace-nowrap mb-8">
             {hotel.imageUrls.map((imageUrl, index) => (
-              <div key={index} className="inline-block border border-gray-200 rounded-md overflow-hidden mr-4 h-64">
+              <div
+                key={index}
+                className="inline-block border border-gray-200 rounded-md overflow-hidden mr-4 h-64"
+              >
                 <img
                   src={imageUrl}
                   alt={hotel.name}
@@ -46,7 +49,10 @@ const Detail = () => {
 
           <div className="grid grid-cols-2 gap-4 mb-8">
             {hotel.facilities.map((facility, index) => (
-              <div key={index} className="border border-gray-200 rounded-md p-4">
+              <div
+                key={index}
+                className="border border-gray-200 rounded-md p-4"
+              >
                 {facility}
               </div>
             ))}

@@ -5,11 +5,8 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestSection from "./GuestSection";
 import ImagesSection from "./ImagesSection";
 import { HotelType } from "../../../../back-end/src/models/hotel";
-
-
-import { useEffect, useState }  from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import RoomTypeSelector from "./RoomTypeSelector";
 
 // Defining the structure of the form data
 export type HotelFormData = {
@@ -25,7 +22,6 @@ export type HotelFormData = {
   imageUrls: string[];
   adultCount: number;
   childCount: number;
-  room: string;
 };
 
 // Props for the ManageHotelForm component
@@ -36,15 +32,7 @@ type Props = {
 };
 
 // Main component for managing hotel form
-const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
-
-  const [selectedRoomType, setSelectedRoomType] = useState<string>(""); // Initialize with an empty string
-
-  const handleRoomTypeChange = (type: string) => { // Change the type to string
-    setSelectedRoomType(type);
-  };
-
-
+const ManageHotelForm: React.FC<Props> = ({ onSave, isLoading, hotel }) => {
   // Initializing form methods using useForm hook
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
@@ -56,10 +44,7 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
 
   // Handling form submission
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
-    // Creating a FormData object to handle file uploads
     const formData = new FormData();
-
-    // Appending form data to the FormData object
     if (hotel) {
       formData.append("hotelId", hotel._id);
     }
@@ -72,25 +57,18 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
     formData.append("starRating", formDataJson.starRating.toString());
     formData.append("adultCount", formDataJson.adultCount.toString());
     formData.append("childCount", formDataJson.childCount.toString());
-    formData.append("room", selectedRoomType as string);
 
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
-
-    // Appending image URLs to the FormData object
     if (formDataJson.imageUrls) {
       formDataJson.imageUrls.forEach((url, index) => {
         formData.append(`imageUrls[${index}]`, url);
       });
     }
-
-    // Appending image files to the FormData object
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
     });
-
-    // Calling the onSave function with the FormData object
     onSave(formData);
   });
 
@@ -101,15 +79,12 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
         className="flex flex-col gap-10 bg-gray-200 p-5 rounded shadow-md"
         onSubmit={onSubmit}
       >
-        {/* Including various sections of the form as separate components */}
         <DetailsSection />
         <TypeSection />
         <FacilitiesSection />
         <GuestSection />
-        <RoomTypeSelector onChange={handleRoomTypeChange} />
         <ImagesSection />
-        {/* Cancel and Submit buttons */}
-        <div className="flex justify-between ">
+        <div className="flex justify-between">
           <span>
             <Link
               to="/my-hotels"

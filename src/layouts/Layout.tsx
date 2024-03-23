@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import NewsletterSignup from "../components/NewsletterSignup";
 import Carousel from "../components/Carousel";
 
+
 interface Props {
   children: React.ReactNode;
 }
@@ -18,16 +19,16 @@ const Layout = ({ children }: Props) => {
         <SearchBar />
       </div>
       <div className="container mt-5 mx-auto">
-      <Carousel />
+        <Carousel />
       </div>
+
+     
 
       <div className="container mx-auto py-10 flex-1">{children}</div>
-      <div>
-        {" "}
-       
-      </div>
+      <div> </div>
 
       <NewsletterSignup />
+
       <Footer />
     </div>
   );

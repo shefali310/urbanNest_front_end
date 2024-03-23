@@ -1,12 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { HotelFormData } from "./ManageHotelForm";
 
+
 const DetailsSection = () => {
   const {
     register,
     formState: { errors },
   } = useFormContext<HotelFormData>();
 
+
+ 
   return (
     <div className="flex flex-col gap-4 ">
       <h1 className="text-3xl font-bold mb-3 text-center text-orange text-shadow-lg">
@@ -60,6 +63,7 @@ const DetailsSection = () => {
           <span className="text-red-500">{errors.description.message}</span>
         )}
       </label>
+
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
         Price Per Night
         <input
@@ -91,6 +95,12 @@ const DetailsSection = () => {
           <span className="text-red-500">{errors.starRating.message}</span>
         )}
       </label>
+
+      
+   
+
+
+     
     </div>
   );
 };

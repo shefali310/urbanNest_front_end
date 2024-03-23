@@ -1,25 +1,40 @@
+import  { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
-import { useState } from "react";
-import { motion } from "framer-motion"; 
+import { UserType } from "../../../back-end/src/models/user";
+import { fetchCurrentUser } from "../api-client";
 import "../css/urbanNest.css";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const { isLoggedIn } = useAppContext();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await fetchCurrentUser();
+        setCurrentUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [isLoggedIn]); // Fetch user data whenever isLoggedIn changes
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const { isLoggedIn } = useAppContext();
-
   return (
-    <motion.div // motion animation wrapper
-      initial={{ opacity: 0, y: -50 }} // Initial animation state
-      animate={{ opacity: 1, y: 0 }} // Animation when component is mounted
-      transition={{ duration: 0.5 }} // Animation duration
-      className="bg-gray-800 py-6 shadow-lg" 
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-800 py-6 shadow-lg"
     >
       <div className="container mx-auto flex justify-between items-center">
         <span className="text-3xl pl-5 md:text-xl text-orange font-bold tracking-tight">
@@ -32,7 +47,6 @@ const Header = () => {
           </Link>
         </span>
 
-        {/* Mobile menu */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
@@ -41,17 +55,13 @@ const Header = () => {
             Menu
           </button>
           {isMenuOpen && (
-            <motion.div // motion animation wrapper
-              initial={{ opacity: 0, y: -20 }} // Initial animation state
-              animate={{ opacity: 1, y: 0 }} // Animation when menu is opened
-              transition={{ duration: 0.3 }} // Animation duration
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
               className="absolute top-16 right-0 bg-white p-4 shadow-md"
             >
-              {/* Menu items */}
-              <Link
-                to="/aboutus"
-                className="block mb-2 text-orange font-bold"
-              >
+              <Link to="/aboutus" className="block mb-2 text-orange font-bold">
                 About&nbsp;us
               </Link>
               <Link
@@ -60,8 +70,14 @@ const Header = () => {
               >
                 Contact&nbsp;us
               </Link>
-              {isLoggedIn ? (
+              {isLoggedIn && currentUser && (
                 <>
+                  <Link
+                    to={`/profile/${currentUser?._id}`} 
+                    className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                  >
+                    Profile
+                  </Link>
                   <Link
                     to="/my-bookings"
                     className="block mb-2 text-orange font-bold"
@@ -76,21 +92,12 @@ const Header = () => {
                   </Link>
                   <SignOutButton />
                 </>
-              ) : (
-                <Link
-                  to="/sign-in"
-                  className="block mb-2 text-orange font-bold"
-                >
-                  Login
-                </Link>
               )}
             </motion.div>
           )}
         </div>
 
-        {/* Desktop and Tablet view */}
         <span className="hidden md:flex space-x-2">
-          {/* Menu items */}
           <Link
             className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
             to="/aboutus"
@@ -105,6 +112,12 @@ const Header = () => {
           </Link>
           {isLoggedIn ? (
             <>
+              <Link
+                to={`/profile/${currentUser?._id}`} 
+                className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+              >
+                Profile
+              </Link>
               <Link
                 className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
                 to="/my-bookings"

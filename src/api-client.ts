@@ -2,14 +2,15 @@ import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
- 
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
-  
 } from "../../back-end/src/models/hotel";
 import { UserType } from "../../back-end/src/models/user";
 
+export type UserProfileResponse = {
+  user: UserType;
+};
 
 // Access the API base URL from the Vite environment
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -97,9 +98,6 @@ export const addMyHotel = async (hotelFormData: FormData) => {
 
   return response.json();
 };
-
-
-
 
 // Make a request to fetch the user's hotels
 export const fetchMyHotels = async (): Promise<HotelType[]> => {
@@ -298,6 +296,19 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
   });
   if (!response.ok) {
     throw new Error("Error fetching user");
+  }
+  return response.json();
+};
+
+// Make a request to fetch the current User Profile
+export const fetchUserProfile = async (
+  userId: string
+): Promise<UserProfileResponse> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/profile/${userId}`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Error fetching user profile");
   }
   return response.json();
 };

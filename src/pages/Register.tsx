@@ -14,11 +14,10 @@ export type RegisterFormData = {
   confirmPassword: string;
 };
 
-
 const Register = () => {
   // Access the query client for managing queries in React Query
   const queryClient = useQueryClient();
-  
+
   // Access the navigation function from react-router-dom
   const navigate = useNavigate();
 
@@ -39,10 +38,10 @@ const Register = () => {
     onSuccess: async () => {
       // Show a success message
       showToast({ message: "Registration Successful!", type: "SUCCESS" });
-      
+
       // Invalidate the "validateToken" query to reflect the user's signed-in state
       await queryClient.invalidateQueries("validateToken");
-      
+
       // Navigate to the home page
       navigate("/");
     },
@@ -159,6 +158,5 @@ const Register = () => {
     </form>
   );
 };
-
 
 export default Register;
