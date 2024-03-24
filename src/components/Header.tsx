@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppContext";
@@ -6,6 +6,7 @@ import SignOutButton from "./SignOutButton";
 import { UserType } from "../../../back-end/src/models/user";
 import { fetchCurrentUser } from "../api-client";
 import "../css/urbanNest.css";
+import { FaUser, FaBars } from "react-icons/fa";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,16 +51,16 @@ const Header = () => {
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
-            className="text-orange font-bold bg-white px-2 py-2"
+            className="text-gray mr-5 font-bold bg-white px-1 py-1"
           >
-            Menu
+            <FaBars />
           </button>
           {isMenuOpen && (
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="absolute top-16 right-0 bg-white p-4 shadow-md"
+              className="absolute top-16 right-0 bg-white mr-4 p-4 shadow-md"
             >
               <Link to="/aboutus" className="block mb-2 text-orange font-bold">
                 About&nbsp;us
@@ -70,28 +71,47 @@ const Header = () => {
               >
                 Contact&nbsp;us
               </Link>
-              {isLoggedIn && currentUser && (
+              {isLoggedIn && currentUser ? (
                 <>
+                  {currentUser.role === "admin" && (
+                    <>
+                      <Link
+                        className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                        to="/my-hotels"
+                      >
+                        My Hotels
+                      </Link>
+                      <Link
+                        className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                        to="/users-with-bookings"
+                      >
+                        My Users
+                      </Link>
+                    </>
+                  )}
+                  {currentUser.role !== "admin" && (
+                    <Link
+                      to="/my-bookings"
+                      className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                    >
+                      My Bookings
+                    </Link>
+                  )}
                   <Link
-                    to={`/profile/${currentUser?._id}`} 
-                    className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                    to={`/profile/${currentUser._id}`}
+                    className="flex text-orange pl-8 pb-3 text-center px-3 md:px-6 font-bold "
                   >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/my-bookings"
-                    className="block mb-2 text-orange font-bold"
-                  >
-                    My Bookings
-                  </Link>
-                  <Link
-                    to="/my-hotels"
-                    className="block mb-2 text-orange font-bold"
-                  >
-                    My Hotels
+                    <FaUser />
                   </Link>
                   <SignOutButton />
                 </>
+              ) : (
+                <Link
+                  to="/sign-in"
+                  className="flex items-center rounded-md p-2 bg-white text-orange px-3 md:px-6 font-bold"
+                >
+                  Login
+                </Link>
               )}
             </motion.div>
           )}
@@ -110,25 +130,37 @@ const Header = () => {
           >
             Contact us
           </Link>
-          {isLoggedIn ? (
+          {isLoggedIn && currentUser ? (
             <>
+              {currentUser.role === "admin" && (
+                <>
+                  <Link
+                    className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                    to="/my-hotels"
+                  >
+                    My Hotels
+                  </Link>
+                  <Link
+                    className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                    to="/users-with-bookings"
+                  >
+                    My Users
+                  </Link>
+                </>
+              )}
+              {currentUser.role !== "admin" && (
+                <Link
+                  className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                  to="/my-bookings"
+                >
+                  My Bookings
+                </Link>
+              )}
               <Link
-                to={`/profile/${currentUser?._id}`} 
-                className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
+                to={`/profile/${currentUser._id}`}
+                className="flex items-center text-white px-3 md:px-6 font-bold hover:text-orange "
               >
-                Profile
-              </Link>
-              <Link
-                className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
-                to="/my-bookings"
-              >
-                My Bookings
-              </Link>
-              <Link
-                className="flex items-center text-orange px-3 md:px-6 font-bold hover:bg-white"
-                to="/my-hotels"
-              >
-                My Hotels
+                <FaUser className="mr-2" />
               </Link>
               <SignOutButton />
             </>

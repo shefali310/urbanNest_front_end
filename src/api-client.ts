@@ -2,11 +2,13 @@ import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
+  BookingType,
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
 } from "../../back-end/src/models/hotel";
 import { UserType } from "../../back-end/src/models/user";
+import axios from "axios";
 
 export type UserProfileResponse = {
   user: UserType;
@@ -311,4 +313,28 @@ export const fetchUserProfile = async (
     throw new Error("Error fetching user profile");
   }
   return response.json();
+};
+
+//  Function to fetch users with bookings
+export const fetchUsersWithBookings = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/users-with-bookings`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching users with bookings");
+  }
+
+  return response.json();
+};
+
+export const fetchUsersWithHotels = async (): Promise<UserType[]> => {
+  try {
+    const response = await axios.get<UserType[]>(
+      `${API_BASE_URL}/usersWithHotels`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch users with hotels");
+  }
 };

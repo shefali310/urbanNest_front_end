@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import * as apiClient from "../api-client";
 
-
 const MyBookings = () => {
   const { data: hotels, isLoading } = useQuery(
     "fetchMyBookings",
@@ -28,7 +27,7 @@ const MyBookings = () => {
             <div className="grid bg-gray-300 grid-cols-1 lg:grid-cols-[250px,1fr] gap-0 lg:gap-8">
               <div className="w-full h-[250px] relative">
                 <img
-                  src={hotel.imageUrls[5]}
+                  src={hotel.imageUrls[0]}
                   alt={hotel.name}
                   className="w-full h-full object-cover object-center"
                 />

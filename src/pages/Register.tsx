@@ -12,6 +12,7 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmPassword: string;
+  role: 'admin' | 'user';
 };
 
 const Register = () => {
@@ -138,6 +139,21 @@ const Register = () => {
         ></input>
         {errors.confirmPassword && (
           <span className="text-red-500">{errors.confirmPassword.message}</span>
+        )}
+      </label>
+
+      {/* Add role selection */}
+      <label className="text-gray-700 text-sm font-bold flex-1">
+        Role
+        <select
+          className="border rounded w-full py-1 px-2 font-normal"
+          {...register('role', { required: 'Please select a role' })}
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        {errors.role && (
+          <span className="text-red-500">{errors.role.message}</span>
         )}
       </label>
 

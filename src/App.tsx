@@ -21,7 +21,7 @@ import MyBookings from "./pages/MyBookings";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import Profilepage from "./pages/Profilepage";
-
+import UsersWithBookingsPage from "./pages/UsersWithBookingsPage";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -111,6 +111,15 @@ const App = () => {
 
         {isLoggedIn && (
           <>
+            <Route
+              path="/users-with-bookings"
+              element={
+                <Layout>
+                  <UsersWithBookingsPage />
+                </Layout>
+              }
+            />
+
             <Route
               path="/profile/:userId"
               element={
