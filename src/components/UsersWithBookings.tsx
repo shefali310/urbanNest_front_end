@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import * as apiClient from '../api-client';
-import { BiCalendarCheck } from 'react-icons/bi';
 
 const UsersWithBookings: React.FC = () => {
   const { data: usersWithBookings, isLoading, isError } = useQuery(
@@ -21,36 +21,39 @@ const UsersWithBookings: React.FC = () => {
   }
 
   if (!usersWithBookings || usersWithBookings.length === 0) {
-    return <div className="text-center mt-4">No users with bookings found</div>;
+    return <div className="text-center mt-4">No users found</div>;
   }
 
   return (
-    <div className="space-y-5 p-4 sm:p-6 md:p-8 lg:p-10">
-      <h1 className="text-3xl text-orange font-bold mb-3">Users with Bookings</h1>
-      {usersWithBookings.map(user => (
-        <div key={user._id} className="border border-slate-300 rounded-lg p-4 sm:p-6 md:p-8 lg:p-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="border bg-gray-300 rounded-lg shadow-lg p-3">
-              <BiCalendarCheck className="mr-2" />
-              <span className="font-semibold">Bookings:</span>
-              {user.bookings.length > 0 ? (
-                <ul className="mt-2">
-                  {user.bookings.map(booking => (
-                    <li key={booking._id} className="mb-4">
-                      <div>
-                        <h3 className="text-lg font-semibold">{booking.firstName}, {booking.lastName}</h3>
-                        
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <span>No bookings found</span>
-              )}
-            </div>
-          </div>
-        </div>
-      ))}
+    <div className="container mx-auto px-4 sm:px-6 md:px-8">
+      <h1 className="text-3xl text-orange font-bold mb-6">My Users</h1>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-6 py-3 text-left">First Name</th>
+              <th className="px-6 py-3 text-left">Last Name</th>
+              <th className="px-6 py-3 text-left">Email</th>
+              <th className="px-6 py-3 text-left">Role</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {usersWithBookings.map(user => (
+              <tr key={user._id} className="bg-white cursor-pointer">
+                <td className="px-6 py-4 whitespace-nowrap">{user.firstName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.lastName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <Link to={`/${user._id}/users-with-hotelbookings`} className="text-blue-500 hover:underline">
+                    View Bookings
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
-  BookingType,
+ 
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
@@ -315,9 +315,9 @@ export const fetchUserProfile = async (
   return response.json();
 };
 
-//  Function to fetch users with bookings
-export const fetchUsersWithBookings = async (): Promise<HotelType[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/users-with-bookings`, {
+//  Function to fetch all users
+export const fetchUsersWithBookings = async (): Promise<UserType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/users-with-bookings/getallusers`, {
     credentials: "include",
   });
 
@@ -328,10 +328,15 @@ export const fetchUsersWithBookings = async (): Promise<HotelType[]> => {
   return response.json();
 };
 
-export const fetchUsersWithHotels = async (): Promise<UserType[]> => {
+// fetch hotel data from user id 
+export const fetchUsersWithHotels = async (userId: string | undefined): Promise<HotelType[]> => {
   try {
-    const response = await axios.get<UserType[]>(
-      `${API_BASE_URL}/usersWithHotels`
+    if (!userId) {
+      throw new Error("User ID is undefined");
+    }
+
+    const response = await axios.get<HotelType[]>(
+      `${API_BASE_URL}/api/users-with-bookings/hotelbyuserid/${userId}`
     );
     return response.data;
   } catch (error) {
