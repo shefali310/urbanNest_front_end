@@ -20,18 +20,6 @@ const SearchBar = () => {
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
 
-  const [roomCount, setRoomCount] = useState<number>(1);
-
-  const handleAddRoom = () => {
-    setRoomCount(roomCount + 1);
-  };
-
-  const handleRemoveRoom = () => {
-    if (roomCount > 1) {
-      setRoomCount(roomCount - 1);
-    }
-  };
-
   // Handle form submission
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -57,7 +45,7 @@ const SearchBar = () => {
       onSubmit={handleSubmit}
       className="-mt-8 sm:-mt-4 p-3 bg-gray-300 rounded shadow-md grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center gap-4"
     >
-      <div className="flex flex-row items-center bg-white p-2">
+      <div className="flex flex-row items-center bg-white p-2 mt-6">
         <MdTravelExplore size={25} className="mr-2" />
         <input
           placeholder="Where are you going?"
@@ -68,6 +56,7 @@ const SearchBar = () => {
       </div>
 
       <div>
+        <p>Checkin</p>
         <DatePicker
           selected={checkIn}
           onChange={(date) => setCheckIn(date as Date)}
@@ -82,6 +71,7 @@ const SearchBar = () => {
         />
       </div>
       <div>
+        <p>Checkout</p>
         <DatePicker
           selected={checkOut}
           onChange={(date) => setCheckOut(date as Date)}
@@ -95,7 +85,7 @@ const SearchBar = () => {
           wrapperClassName="min-w-full"
         />
       </div>
-      <div className="flex flex-col  bg-white px-2 py-1 gap-1">
+      <div className="flex flex-col  bg-white px-2 py-1 gap-1  mt-6">
         <div className="flex">
           <label className="items-center flex">
             Adults:
@@ -119,30 +109,6 @@ const SearchBar = () => {
               onChange={(event) => setChildCount(parseInt(event.target.value))}
             />
           </label>
-        </div>
-        <div className="flex  items-center flex-col">
-          <label htmlFor="rooms">Rooms</label>
-          <div className="flex items-center">
-            <button
-              onClick={handleRemoveRoom}
-              className="bg-gray-200 rounded-l-md px-2"
-            >
-              -
-            </button>
-            <input
-              type="number"
-              id="rooms"
-              value={roomCount}
-              onChange={(e) => setRoomCount(parseInt(e.target.value))}
-              className="text-center bg-gray-100 w-12"
-            />
-            <button
-              onClick={handleAddRoom}
-              className="bg-gray-200 rounded-r-md px-2"
-            >
-              +
-            </button>
-          </div>
         </div>
       </div>
 

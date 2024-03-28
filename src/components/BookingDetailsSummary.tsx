@@ -1,5 +1,5 @@
 import { HotelType } from "../../../back-end/src/models/hotel";
-
+import { useRoomContext } from "./../contexts/RoomContext";
 type Props = {
   checkIn: Date;
   checkOut: Date;
@@ -17,6 +17,7 @@ const BookingDetailsSummary = ({
   numberOfNights,
   hotel,
 }: Props) => {
+  const { selectedRoom } = useRoomContext();
   return (
     <div className="border rounded-lg  p-5 max-w-md mx-auto">
       <h2 className="text-xl font-bold mb-4">Your Booking Details</h2>
@@ -46,6 +47,10 @@ const BookingDetailsSummary = ({
       <div>
         <p className="font-bold">{`${adultCount} adults & ${childCount} children`}</p>
         <p className="text-gray-600">Guests</p>
+      </div>
+
+      <div>
+        <p>Selected Room: {selectedRoom}</p>
       </div>
     </div>
   );

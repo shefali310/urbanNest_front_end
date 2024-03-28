@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import { useSearchContext } from "../../contexts/SearchContext";
 import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRoomContext } from "../../contexts/RoomContext";
 
 // Type definition for the component props
 type Props = {
@@ -19,12 +20,12 @@ type GuestInfoFormData = {
 };
 
 const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
-
   // Accessing search context and authentication status from App context
   const search = useSearchContext();
   const { isLoggedIn } = useAppContext();
   const navigate = useNavigate();
   const location = useLocation();
+  const { selectedRoom, selectRoom } = useRoomContext();
 
   // React Hook Form methods for form handling
   const {
@@ -41,15 +42,21 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       childCount: search.childCount,
     },
   });
-// Watch the check-in and check-out dates
+
+  const handleRoomSelection = (event: any) => {
+    const selectedRoom = event.target.value;
+    selectRoom(selectedRoom);
+  };
+
+  // Watch the check-in and check-out dates
   const checkIn = watch("checkIn");
   const checkOut = watch("checkOut");
-// Set minimum and maximum date for the date picker
+  // Set minimum and maximum date for the date picker
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
 
-    // Handle sign-in click
+  // Handle sign-in click
   const onSignInClick = (data: GuestInfoFormData) => {
     search.saveSearchValues(
       "",
@@ -58,6 +65,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.adultCount,
       data.childCount
     );
+
     navigate("/sign-in", { state: { from: location } });
   };
 
@@ -70,6 +78,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.adultCount,
       data.childCount
     );
+
     navigate(`/hotel/${hotelId}/booking`);
   };
 
@@ -112,6 +121,20 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               wrapperClassName="min-w-full"
             />
           </div>
+
+          <div>
+            <label>Select Room: </label>
+
+            <select
+              onChange={handleRoomSelection}
+              className="rounded  px-3 py-3 m-2"
+            >
+              <option value="Single Room">Single Room</option>
+              <option value="Double Room">Double Room</option>
+              <option value="Suite Room">Suite Room</option>
+            </select>
+          </div>
+
           <div className="flex bg-white px-2 py-1 gap-2">
             <label className="items-center flex">
               Adults:

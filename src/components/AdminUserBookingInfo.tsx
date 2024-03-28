@@ -1,93 +1,103 @@
-// AdminUserBookingInfo.tsx
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchUsersWithHotels } from "../api-client"; // Import fetchUsersWithHotels function
-import {HotelType} from "../../../back-end/src/models/hotel";
+import { fetchUsersWithHotels } from "../api-client";
+import { HotelType } from "../../../back-end/src/models/hotel";
 
 const AdminUserBookingInfo: React.FC = () => {
-    const { userId } = useParams<{ userId: string }>();
-    const [hotels, setHotels] = useState<HotelType[]>([]);
+  const { userId } = useParams<{ userId: string }>();
+  const [hotels, setHotels] = useState<HotelType[]>([]);
 
-    useEffect(() => {
-        const fetchHotels = async () => {
-            try {
-                const hotelsData = await fetchUsersWithHotels(userId); 
-                // Pass userId to fetch function
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const hotelsData = await fetchUsersWithHotels(userId);
+        setHotels(hotelsData);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
 
-                setHotels(hotelsData);
-            } catch (error) {
-                console.error("Error fetching hotels:", error);
-            }
-        };
+    fetchHotels();
+  }, [userId]);
 
-        fetchHotels();
-    }, [userId]);
-
-    return (
-        <div>
-            {/* <h1>User Booking Details</h1> */}
-            {/* <ul>
-                {hotels.map((hotel) => (
-                    <li key={hotel._id}>
-                        <h2>{hotel.name}</h2>
-                        <p>{hotel.description}</p>
-                    </li>
-                ))}
-            </ul> */}
-
-
-<h1 className="text-3xl font-bold text-center mb-8">User Bookings Details</h1>
-      <div className="  grid grid-cols-1 gap-5">
-        {hotels.map((hotel) => (
-          <div
-            key={hotel._id}
-            className="border border-gray-300 rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-          >
-            <div className="grid bg-gray-300 grid-cols-1 lg:grid-cols-[250px,1fr] gap-0 lg:gap-8">
-              <div className="w-full h-[250px] relative">
-                <img
-                  src={hotel.imageUrls[0]}
-                  alt={hotel.name}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-              <div className="p-6 flex  flex-col justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold">{hotel.name}</h2>
-                  <p className="text-sm text-gray-600 mt-2">
+  return (
+    <div className="container mx-auto px-4 sm:px-6 md:px-8">
+      <h1 className="text-3xl text-orange font-bold text-center mb-8">
+        User Bookings Details
+      </h1>
+      {hotels.length === 0 ? (
+        <div className="text-center mt-4">No hotels booked by this user</div>
+      ) : (
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-3">Hotel</th>
+              <th className="p-3">Image</th>
+              <th className="p-3">Dates and Guests Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hotels.map((hotel) => (
+              <tr key={hotel._id} className="border-b border-gray-300">
+                <td className="p-3">
+                  <div className="font-semibold">{hotel.name}</div>
+                  <div className="text-gray-500">
                     {hotel.city}, {hotel.country}
-                  </p>
-                  <ul className="mt-4">
+                  </div>
+                </td>
+                <td className="p-3">
+                  <img
+                    src={hotel.imageUrls[0]}
+                    alt={hotel.name}
+                    className="w-62 h-52 object-cover"
+                  />
+                </td>
+                <td className="p-3">
+                  <ul>
                     {hotel.bookings.map((booking, index) => (
-                      <li key={index} className="mb-2">
-                        <span className="font-bold mr-2">Dates:</span>
-                        <span>
-                          {new Date(booking.checkIn).toDateString()} -{" "}
-                          {new Date(booking.checkOut).toDateString()}
-                        </span>
-                        <br />
-                        <span className="font-bold mr-2">Guests:</span>
-                        <span>
-                          {booking.adultCount} adults, {booking.childCount}{" "}
-                          children
-                        </span>
+                      <li key={index} className="mb-4">
+                        <div className="mb-2">
+                          <span className="font-semibold">Guests:</span>
+                          <span className="ml-2">
+                            {booking.adultCount} adults, {booking.childCount}{" "}
+                            children
+                          </span>
+                        </div>
+                        <div className="mb-2">
+                          <span className="font-semibold">Total Cost:</span>
+                          <span className="ml-2">${booking.totalCost} </span>
+                        </div>
+                        <div className="border border-gray-300 rounded-md p-2 mb-4">
+                          <div className="mb-2">
+                            <span className="font-semibold">Check-in:</span>
+                            <span className="ml-2">
+                              {new Date(booking.checkIn).toDateString()}
+                            </span>
+                          </div>
+                          <div className="mb-2">
+                            <span className="font-semibold">Check-out:</span>
+                            <span className="ml-2">
+                              {new Date(booking.checkOut).toDateString()}
+                            </span>
+                          </div>
+                          <div className="mb-2">
+                            <span className="font-semibold">
+                              Selected Room:
+                            </span>
+                            <span className="ml-2">{booking.selectedRoom}</span>
+                          </div>
+                        </div>
                       </li>
                     ))}
                   </ul>
-                </div>
-                {/* <div className="mt-4 text-right">
-                  <button className="px-4 py-2 font-bold bg-orange text-white rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 transition duration-300 ease-in-out">
-                    Cancel Booking
-                  </button>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-        </div>
-    );
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 };
 
 export default AdminUserBookingInfo;

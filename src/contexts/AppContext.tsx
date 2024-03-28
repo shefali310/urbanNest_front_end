@@ -7,7 +7,6 @@ import { loadStripe, Stripe } from "@stripe/stripe-js";
 // Stripe public key retrieved from environment variables
 const STRIPE_PUB_KEY = import.meta.env.VITE_STRIPE_PUB_KEY || "";
 
-
 type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
@@ -27,7 +26,11 @@ const AppContext = React.createContext<AppContext | undefined>(undefined);
 const stripePromise = loadStripe(STRIPE_PUB_KEY);
 
 // AppContextProvider component that serves as the context provider
-export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
+export const AppContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   // State for managing toast messages
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
 

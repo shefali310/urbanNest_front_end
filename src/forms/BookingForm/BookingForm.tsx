@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { PaymentIntentResponse } from "../../../../back-end/src/models/hotel";
 import { UserType } from "../../../../back-end/src/models/user";
@@ -8,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api-client";
 import { useAppContext } from "../../contexts/AppContext";
+import { useRoomContext } from "../../contexts/RoomContext";
 
 type Props = {
   currentUser: UserType;
@@ -25,6 +27,7 @@ export type BookingFormData = {
   hotelId: string;
   paymentIntentId: string;
   totalCost: number;
+  selectedRoom: string;
 };
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
@@ -33,7 +36,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 
   const search = useSearchContext();
   const { hotelId } = useParams();
-
+  const { selectedRoom } = useRoomContext(); 
   const { showToast } = useAppContext();
 
   const { mutate: bookRoom, isLoading } = useMutation(
@@ -48,7 +51,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     }
   );
 
-  const { handleSubmit, register } = useForm<BookingFormData>({
+  const { handleSubmit, register, setValue } = useForm<BookingFormData>({
     defaultValues: {
       firstName: currentUser.firstName,
       lastName: currentUser.lastName,
@@ -59,9 +62,15 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       checkOut: search.checkOut.toISOString(),
       hotelId: hotelId,
       totalCost: paymentIntent.totalCost,
+      selectedRoom: "", 
       paymentIntentId: paymentIntent.paymentIntentId,
     },
   });
+
+  // Update selectedRoom value when it changes
+  useEffect(() => {
+    setValue("selectedRoom", selectedRoom); 
+  }, [selectedRoom, setValue]);
 
   const onSubmit = async (formData: BookingFormData) => {
     if (!stripe || !elements) {
@@ -75,6 +84,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     });
 
     if (result.paymentIntent?.status === "succeeded") {
+      console.log(formData);
       bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
     }
   };

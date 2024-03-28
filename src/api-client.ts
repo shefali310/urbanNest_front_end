@@ -2,7 +2,6 @@ import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
- 
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
@@ -272,25 +271,6 @@ export const createPaymentIntent = async (
   return response.json();
 };
 
-// Make a POST request to create a room booking
-export const createRoomBooking = async (formData: BookingFormData) => {
-  const response = await fetch(
-    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(formData),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Error booking room");
-  }
-};
-
 // Make a request to fetch the current user
 export const fetchCurrentUser = async (): Promise<UserType> => {
   const response = await fetch(`${API_BASE_URL}/api/users/me`, {
@@ -317,9 +297,12 @@ export const fetchUserProfile = async (
 
 //  Function to fetch all users
 export const fetchUsersWithBookings = async (): Promise<UserType[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/users-with-bookings/getallusers`, {
-    credentials: "include",
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/api/users-with-bookings/getallusers`,
+    {
+      credentials: "include",
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Error fetching users with bookings");
@@ -328,8 +311,10 @@ export const fetchUsersWithBookings = async (): Promise<UserType[]> => {
   return response.json();
 };
 
-// fetch hotel data from user id 
-export const fetchUsersWithHotels = async (userId: string | undefined): Promise<HotelType[]> => {
+// fetch hotel data from user id
+export const fetchUsersWithHotels = async (
+  userId: string | undefined
+): Promise<HotelType[]> => {
   try {
     if (!userId) {
       throw new Error("User ID is undefined");
@@ -341,5 +326,43 @@ export const fetchUsersWithHotels = async (userId: string | undefined): Promise<
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch users with hotels");
+  }
+};
+
+// Make a POST request to create a room booking
+export const createRoomBooking = async (formData: BookingFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error booking room");
+  }
+};
+
+// Function to update the selected room for a booking
+export const updateBookingRoom = async (
+  bookingId: string,
+  selectedRoom: string
+) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/api/hotels/bookings/${bookingId}/room`,
+
+      { selectedRoom },
+      { withCredentials: true } 
+    );
+
+    return response.data; 
+  } catch (error) {
+    throw new Error("Failed to update selected room for booking");
   }
 };
